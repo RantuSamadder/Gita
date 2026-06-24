@@ -570,3 +570,8 @@ div.purport-text,
     text-align: center !important;
     display: block !important;
 }
+/* কলামের টাইটেল বা ভেতরের টেক্সটে 'গীতার গান' লেখা থাকলেই কালপুরুষ ফন্ট ও সেন্টার হবে */
+[class*="gitar-gaan"], .field:has(.field-title:contains("গীতার গান")) .field-content {
+    font-family: 'Kalpurush', sans-serif !important;
+    text-align: center !important;
+}
