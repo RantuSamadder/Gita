@@ -503,3 +503,16 @@ body{
     .outer-ring { width: 65px; height: 65px; }
     .inner-ring { width: 40px; height: 40px; }
 }
+/* ==========================================================================
+   DISPLAY OPTIONS / CHECKBOX CONTAINER FORCE FIX
+   ========================================================================== */
+#checkboxContainer,
+#checkboxContainer label,
+#checkboxContainer span,
+#checkboxContainer input,
+.filter-options,
+.filter-options label,
+.filter-options span {
+  font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
+  font-size: 1.05rem !important; /* লেখা যেন স্পষ্ট ও পড়া যায় */
+}
