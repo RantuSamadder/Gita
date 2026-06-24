@@ -1,4 +1,4 @@
-const API_URL = 'https://script.google.com/macros/s/AKfycbzCuCuf4Vyn5lJ7QpJ5B-ghRLoKqRi0lCHks62y2rY2x2Rn3bk7AgrLcp9v9RwPoMbfJA/exec';
+const API_URL = 'https://script.google.com/macros/s/AKfycbyD3NgN6uTM2o2i4jcp6bZxEDtibIBpXnWl2mnTiXsOe1B1gzUKeiQhPMQabbS9oc4omw/exec';
 
 // Changed to a let variable so it can be populated dynamically
 let checkboxFields = [];
@@ -19,7 +19,7 @@ async function loadData(){
                     chapter.verses.forEach(verse => {
                         Object.keys(verse).forEach(key => {
                             // Automatically skip the primary 'Verse' identifying column
-                            if (key !== 'Verse') {
+                            if (key !== 'শ্লোক') {
                                 extractedFields.add(key);
                             }
                         });
@@ -83,7 +83,7 @@ function renderIndex(){
     const container = document.getElementById('indexContainer');
     container.innerHTML = '';
 
-    appData.index.forEach(item => {
+    appData.সূচীপত্র.forEach(item => {
         const card = document.createElement('div');
         card.className = 'index-item';
 
@@ -132,7 +132,7 @@ function renderChapter(chapterName){
 
 function renderChapterHeader(chapterName){
     const header = document.getElementById('chapterHeader');
-    const chapterIndexData = appData.index.find(
+    const chapterIndexData = appData.সূচীপত্র.find(
         item => item['Chapter'] === chapterName
     );
 
@@ -147,7 +147,7 @@ function renderChapterHeader(chapterName){
 
     header.innerHTML = `
         <button class="back-btn" onclick="backToIndex()">
-            ← Back to Index
+            ← সূচীপত্রে ফিরে যান
         </button>
         <h2>${chapterName}</h2>
         <div class="chapter-meta">${metaHTML}</div>
@@ -163,22 +163,22 @@ function renderVerses(chapter){
         const card = document.createElement('div');
         card.className = 'verse-card';
 
-        const fullVerse = verse['Verse'] || '';
+        // 'Verse' এর পরিবর্তে 'শ্লোক' কলাম রিড করা হচ্ছে
+        const fullVerse = verse['শ্লোক'] || '';
         const verseOnly = fullVerse.includes('-') ? fullVerse.split('-')[1] : fullVerse;
         const formattedVerse = verseOnly.replaceAll('_', ', ');
 
         let html = `
             <div class="verse-number">
-                Verse ${formattedVerse}
-            </div>
+                শ্লোক ${formattedVerse} </div>
         `;
 
         selectedFields.forEach(field => {
             if(verse[field]){
                 let extraClass = '';
 
-                // Keep your custom font/text styling rules intact for existing fields
-                if(field === 'Sanskrit'){
+                // নতুন বাংলা কলামের নাম অনুযায়ী সিএসএস ক্লাস ম্যাপিং
+                if(field === 'সংস্কৃতম্'){
                     extraClass = 'sanskrit';
                 }
                 else if(field === 'English Transliteration'){
@@ -187,14 +187,14 @@ function renderVerses(chapter){
                 else if(field === 'English Translation'){
                     extraClass = 'english-text';
                 }
-                else if(field === 'Bangla Transliteration'){
+                else if(field === 'লিপ্যন্তর'){
                     extraClass = 'bangla-transliteration';
                 }
-                else if(field === 'Bangla Translation'){
+                else if(field === 'অনুবাদ'){
                     extraClass = 'bangla-text';
                 }
                 else {
-                    // Generates a clean dynamic class name fallback for any new columns added to the Sheet
+                    // নতুন কোনো কলাম যোগ করলে স্বয়ংক্রিয় ডায়নামিক ক্লাস তৈরি হবে
                     extraClass = 'dynamic-' + field.toLowerCase().replace(/[^a-z0-9]/g, '-');
                 }
 
@@ -217,29 +217,29 @@ function renderChapterNavigation(chapterName) {
     const navContainer = document.getElementById('chapterNavigation');
     if (!navContainer) return;
 
-    const currentIndex = appData.index.findIndex(item => item['Chapter'] === chapterName);
+    const currentIndex = appData.সূচীপত্র.findIndex(item => item['Chapter'] === chapterName);
     
-    const prevChapterItem = appData.index[currentIndex - 1];
-    const nextChapterItem = appData.index[currentIndex + 1];
+    const prevChapterItem = appData.সূচীপত্র[currentIndex - 1];
+    const nextChapterItem = appData.সূচীপত্র[currentIndex + 1];
 
     let html = '';
 
-    // 1. Only render "Back to Chapter" button if a real preceding chapter exists (hidden on Chapter 1)
+    // 1. Only render "পূর্ববর্তী: অধ্যায়" button if a real preceding chapter exists (hidden on Chapter 1)
     if (prevChapterItem && prevChapterItem['Chapter']) {
         const prevChapterName = prevChapterItem['Chapter'];
         html += `
             <button class="nav-btn prev-chap-btn" onclick="renderChapter('${prevChapterName}')">
-                ← Back to ${prevChapterName}
+                ← পূর্ববর্তী: ${prevChapterName}
             </button>
         `;
     }
 
-    // 2. Only render "Go to Chapter" button if a real following chapter exists (hidden on Chapter 18)
+    // 2. Only render "পরবর্তী: অধ্যায়" button if a real following chapter exists (hidden on Chapter 18)
     if (nextChapterItem && nextChapterItem['Chapter']) {
         const nextChapterName = nextChapterItem['Chapter'];
         html += `
             <button class="nav-btn next-chap-btn" onclick="renderChapter('${nextChapterName}')">
-                Go to ${nextChapterName} →
+                পরবর্তী: ${nextChapterName} →
             </button>
         `;
     }
