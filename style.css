@@ -485,14 +485,6 @@ body {
     font-size: 1.05rem !important;
 }
 
-/* ডাইনামিক কলামের গ্লোবাল রুল (গীতার গান বাদে বাকি সব টেক্সটকে কালপুরুষ করবে) */
-.field-content:not(.gitar-gaan-text),
-[class*="dynamic-"],
-.field-content div:not(.gitar-gaan-text),
-.verse-card .field .field-content:not(.gitar-gaan-text) {
-    font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
-}
-
 /* ==========================================================================
    ১০. RESPONSIVE DESIGN (MOBILE ADJUSTMENTS)
    ========================================================================== */
