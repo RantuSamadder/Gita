@@ -193,7 +193,7 @@ function renderVerses(chapter){
                 else if(field === 'অনুবাদ'){
                     extraClass = 'bangla-text';
                 }
-                else if(field.trim() === 'গীতার গান'){
+                else if(field.includes('গীতার') && field.includes('গান')){
                     extraClass = 'gitar-gaan-text'; 
                 }
                 else if(field.trim() === 'তাৎপর্য'){
