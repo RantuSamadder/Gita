@@ -88,7 +88,7 @@ body{
 .loader-text {
     font-size: 2.6rem;
     color: #5a3515;
-    font-family: 'Cinzel', serif;
+    font-family: 'Kalpurush', sans-serif;
     letter-spacing: 2px;
     background: linear-gradient(90deg, #5a3515, #a37244, #5a3515);
     background-size: 200% auto;
@@ -151,7 +151,7 @@ body{
 .hero h1{
     font-size:3.4rem;
     color:#5a3515;
-    font-family:'Cinzel', serif;
+    font-family:'Kalpurush', sans-serif;
     margin-bottom:5px;
     letter-spacing:1px;
 }
@@ -159,7 +159,7 @@ body{
 .hero p{
     font-size:1.05rem;
     color:#6b5842;
-    font-style:italic;
+    font-family:'Kalpurush', sans-serif;
 }
 
 /* Book Style Sections */
@@ -181,7 +181,7 @@ body{
 .book-title h2{
     font-size:2rem;
     color:#6d421c;
-    font-family:'Cinzel', serif;
+    font-family:'Kalpurush', sans-serif;
 }
 
 /* Index */
@@ -189,11 +189,13 @@ body{
     display:flex;
     flex-direction:column;
     gap:10px;
+    font-family:'Kalpurush', sans-serif;
 }
 
 .index-item{
     background:#f3e5c5;
     border:1px solid rgba(0,0,0,0.08);
+    font-family:'Kalpurush', sans-serif;
     border-radius:10px;
     padding:14px 16px;
     cursor:pointer;
@@ -208,6 +210,7 @@ body{
 .index-item h3{
     font-size:1.15rem;
     color:#5f3815;
+    font-family:'Kalpurush', sans-serif;
     margin-bottom:2px;
     text-align:center;
 }
@@ -239,6 +242,7 @@ body{
 .back-btn{
     border:none;
     background:#6d421c;
+    font-family:'Kalpurush', sans-serif;
     color:#fff;
     padding:10px 18px;
     border-radius:8px;
@@ -254,7 +258,7 @@ body{
 .chapter-header h2{
     font-size:2rem;
     color:#5f3815;
-    font-family:'Cinzel', serif;
+    font-family:'Kalpurush', sans-serif;
 }
 
 .chapter-meta{
@@ -276,7 +280,7 @@ body{
 .controls h3{
     margin-bottom:14px;
     color:#6d421c;
-    font-family:'Cinzel', serif;
+    font-family:'Kalpurush', sans-serif;
     text-align:center;
 }
 
@@ -314,7 +318,7 @@ body{
     margin-bottom:14px;
     font-weight:bold;
     text-align:center;
-    font-family:'Cinzel', serif;
+    font-family: 'Kalpurush', sans-serif;
 }
 
 /* FIELD FIX */
@@ -333,6 +337,7 @@ body{
     font-size:0.95rem;
     text-align:center;
     letter-spacing:0.5px;
+    font-family: 'Kalpurush', sans-serif;
 }
 
 .field-content{
@@ -385,7 +390,7 @@ body{
 
 /* Bangla Transliteration */
 .bangla-transliteration{
-    font-family: 'Noto Serif Bengali', serif; /* Prioritize Noto Serif */
+    font-family: 'Kalpurush', sans-serif; /* Prioritize Noto Serif */
     font-size: 1.25rem; /* Increased slightly for clear conjunct readability */
     line-height: 1.8;
     font-weight: 700; 
@@ -441,6 +446,7 @@ body{
 .prev-chap-btn {
     background: #8a5a2d;
     color: #fff;
+    font-family: 'Kalpurush', sans-serif;
 }
 
 .prev-chap-btn:hover {
@@ -451,7 +457,7 @@ body{
 .next-chap-btn {
     background: #6d421c;
     color: #fff;
-    font-family: 'Cinzel', serif;
+    font-family: 'Kalpurush', sans-serif;
 }
 
 .next-chap-btn:hover {
