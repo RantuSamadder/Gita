@@ -1,30 +1,35 @@
+/* ==========================================================================
+   ১. GLOBAL FONTS & BASIC RESET
+   ========================================================================== */
 * {
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-@font-face{
-    font-family:'Kalpurush';
-    src:url('https://cdn.jsdelivr.net/gh/rupokify/Kalpurush@master/fonts/kalpurush.ttf') format('truetype');
-    font-weight:normal;
-    font-style:normal;
+@font-face {
+    font-family: 'Kalpurush';
+    src: url('https://cdn.jsdelivr.net/gh/rupokify/Kalpurush@master/fonts/kalpurush.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+    scroll-behavior: smooth;
 }
 
-body{
-    background:#efe3c2;
-    color:#2f2417;
-    font-family:'EB Garamond', serif;
-    line-height:1.65;
+body {
+    background: #efe3c2;
+    color: #2f2417;
+    font-family: 'Kalpurush', 'Noto Serif Bengali', 'EB Garamond', serif;
+    line-height: 1.65;
     background-image: radial-gradient(rgba(90,55,20,0.04) 1px, transparent 1px);
-    background-size:8px 8px;
+    background-size: 8px 8px;
 }
 
-/* Advanced Elegant Loader */
+/* ==========================================================================
+   ২. ADVANCED ELEGANT LOADER
+   ========================================================================== */
 #loader {
     position: fixed;
     inset: 0;
@@ -44,7 +49,6 @@ body{
     text-align: center;
 }
 
-/* Cosmic Mandala Chakra Spinner */
 .mandala-spinner {
     position: relative;
     width: 80px;
@@ -84,7 +88,6 @@ body{
     animation: spinCounterClockwise 2.5s infinite ease-in-out;
 }
 
-/* Typography Animations */
 .loader-text {
     font-size: 2.6rem;
     color: #5a3515;
@@ -101,315 +104,311 @@ body{
 .loader-subtitle {
     font-size: 1.05rem;
     color: #6b5842;
-    font-family: 'EB Garamond', serif;
+    font-family: 'Kalpurush', sans-serif;
     font-style: italic;
     letter-spacing: 1px;
     opacity: 0;
     animation: subtitleFade 1.5s forwards 0.4s;
 }
 
-/* Loader Keyframe Animations */
-@keyframes spinClockwise {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+@keyframes spinClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes spinCounterClockwise { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+@keyframes corePulse { 0%, 100% { transform: scale(0.8); opacity: 0.7; } 50% { transform: scale(1.2); opacity: 1; } }
+@keyframes textShimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+@keyframes subtitleFade { to { opacity: 0.75; } }
 
-@keyframes spinCounterClockwise {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(-360deg); }
-}
-
-@keyframes corePulse {
-    0%, 100% { transform: scale(0.8); opacity: 0.7; }
-    50% { transform: scale(1.2); opacity: 1; }
-}
-
-@keyframes textShimmer {
-    0% { background-position: 0% center; }
-    100% { background-position: 200% center; }
-}
-
-@keyframes subtitleFade {
-    to { opacity: 0.75; }
-}
-
-/* Main Container */
+/* ==========================================================================
+   ৩. MAIN LAYOUT & HERO
+   ========================================================================== */
 .container{
-    width:min(900px, 94%);
-    margin:auto;
-    padding-bottom:70px;
+    width: min(900px, 94%);
+    margin: auto;
+    padding-bottom: 70px;
 }
 
-/* Hero */
 .hero{
-    text-align:center;
-    padding:45px 10px 30px;
-    border-bottom:1px solid rgba(0,0,0,0.08);
-    margin-bottom:25px;
+    text-align: center;
+    padding: 45px 10px 30px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    margin-bottom: 25px;
 }
 
 .hero h1{
-    font-size:3.4rem;
-    color:#5a3515;
-    font-family:'Kalpurush', sans-serif;
-    margin-bottom:5px;
-    letter-spacing:1px;
+    font-size: 3.4rem;
+    color: #5a3515;
+    font-family: 'Kalpurush', sans-serif;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
 }
 
 .hero p{
-    font-size:1.05rem;
-    color:#6b5842;
-    font-family:'Kalpurush', sans-serif;
-}
-
-/* Book Style Sections */
-.book-view{
-    background:#f8edd0;
-    border:1px solid rgba(80,50,20,0.12);
-    border-radius:12px;
-    padding:28px 22px;
-    box-shadow:
-    0 4px 12px rgba(0,0,0,0.06),
-    inset 0 0 25px rgba(120,80,30,0.05);
-}
-
-.book-title{
-    text-align:center;
-    margin-bottom:24px;
-}
-
-.book-title h2{
-    font-size:2rem;
-    color:#6d421c;
-    font-family:'Kalpurush', sans-serif;
-}
-
-/* Index */
-.index-list{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    font-family:'Kalpurush', sans-serif;
-}
-
-.index-item{
-    background:#f3e5c5;
-    border:1px solid rgba(0,0,0,0.08);
-    font-family:'Kalpurush', sans-serif;
-    border-radius:10px;
-    padding:14px 16px;
-    cursor:pointer;
-    transition:0.25s;
-}
-
-.index-item:hover{
-    transform:translateX(4px);
-    background:#ead8b1;
-}
-
-.index-item h3{
-    font-size:1.15rem;
-    color:#5f3815;
-    font-family:'Kalpurush', sans-serif;
-    margin-bottom:2px;
-    text-align:center;
-}
-
-.index-extra{
-    color:#6b5842;
-    font-size:0.96rem;
-    text-align:center;
-    font-family:'Kalpurush', sans-serif;
-}
-
-/* Chapter */
-.chapter-view{
-    display:none;
-}
-
-.chapter-header{
-    background:#f8edd0;
-    border-radius:14px;
-    padding:22px;
-    margin-bottom:22px;
-    border:1px solid rgba(0,0,0,0.08);
-    box-shadow:
-    0 4px 10px rgba(0,0,0,0.05),
-    inset 0 0 20px rgba(120,80,30,0.05);
-    text-align:center;
-}
-
-.back-btn{
-    border:none;
-    background:#6d421c;
-    font-family:'Kalpurush', sans-serif;
-    color:#fff;
-    padding:10px 18px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:0.95rem;
-    margin-bottom:18px;
-}
-
-.back-btn:hover{
-    background:#4f2f12;
-}
-
-.chapter-header h2{
-    font-size:2rem;
-    color:#5f3815;
-    font-family:'Kalpurush', sans-serif;
-}
-
-.chapter-meta{
-    margin-top:8px;
-    color:#6f5b44;
-    text-align:center;
-    font-family:'Kalpurush', sans-serif;
-}
-
-/* Controls */
-.controls{
-    background:#f8edd0;
-    border-radius:14px;
-    padding:18px;
-    margin-bottom:24px;
-    border:1px solid rgba(0,0,0,0.08);
-}
-
-.controls h3{
-    margin-bottom:14px;
-    color:#6d421c;
-    font-family:'Kalpurush', sans-serif;
-    text-align:center;
-}
-
-.checkbox-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-    gap:10px;
-}
-
-.checkbox-grid label{
-    background:#f3e5c5;
-    padding:10px 12px;
-    border-radius:10px;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:0.95rem;
-}
-
-/* Verse Card */
-.verse-card{
-    background:#fdf6e3;
-    border-radius:12px;
-    padding:20px 22px;
-    margin-bottom:18px;
-    border-left:4px solid #8a5a2d;
-    box-shadow:
-    0 3px 10px rgba(0,0,0,0.04),
-    inset 0 0 18px rgba(120,80,30,0.04);
-}
-
-.verse-number{
-    font-size:1.3rem;
-    color:#6d421c;
-    margin-bottom:14px;
-    font-weight:bold;
-    text-align:center;
+    font-size: 1.05rem;
+    color: #6b5842;
     font-family: 'Kalpurush', sans-serif;
 }
 
-/* FIELD FIX */
+/* ==========================================================================
+   ৪. BOOK STYLE SECTIONS & INDEX (পাঠ বিন্যাস)
+   ========================================================================== */
+.book-view{
+    background: #f8edd0;
+    border: 1px solid rgba(80,50,20,0.12);
+    border-radius: 12px;
+    padding: 28px 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06), inset 0 0 25px rgba(120,80,30,0.05);
+}
+
+.book-title{
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.book-title h2{
+    font-size: 2rem;
+    color: #6d421c;
+    font-family: 'Kalpurush', sans-serif;
+}
+
+.index-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Kalpurush', sans-serif;
+}
+
+.index-item{
+    background: #f3e5c5;
+    border: 1px solid rgba(0,0,0,0.08);
+    font-family: 'Kalpurush', sans-serif;
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.index-item:hover{
+    transform: translateX(4px);
+    background: #ead8b1;
+}
+
+.index-item h3{
+    font-size: 1.15rem;
+    color: #5f3815;
+    font-family: 'Kalpurush', sans-serif;
+    margin-bottom: 2px;
+    text-align: center;
+}
+
+.index-extra{
+    color: #6b5842;
+    font-size: 0.96rem;
+    text-align: center;
+    font-family: 'Kalpurush', sans-serif;
+}
+
+/* ==========================================================================
+   ৫. CHAPTER LAYOUT & CONTROLS
+   ========================================================================== */
+.chapter-view{
+    display: none;
+}
+
+.chapter-header{
+    background: #f8edd0;
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 22px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05), inset 0 0 20px rgba(120,80,30,0.05);
+    text-align: center;
+}
+
+.back-btn{
+    border: none;
+    background: #6d421c;
+    font-family: 'Kalpurush', sans-serif;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin-bottom: 18px;
+}
+
+.back-btn:hover{
+    background: #4f2f12;
+}
+
+.chapter-header h2{
+    font-size: 2rem;
+    color: #5f3815;
+    font-family: 'Kalpurush', sans-serif;
+}
+
+.chapter-meta{
+    margin-top: 8px;
+    color: #6f5b44;
+    text-align: center;
+    font-family: 'Kalpurush', sans-serif;
+}
+
+.controls{
+    background: #f8edd0;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 24px;
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+.controls h3{
+    margin-bottom: 14px;
+    color: #6d421c;
+    font-family: 'Kalpurush', sans-serif;
+    text-align: center;
+}
+
+.checkbox-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 10px;
+}
+
+.checkbox-grid label{
+    background: #f3e5c5;
+    padding: 10px 12px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-family: 'Kalpurush', sans-serif !important;
+}
+
+/* ==========================================================================
+   ৬. VERSE CARD & FIELD LAYOUT
+   ========================================================================== */
+.verse-card{
+    background: #fdf6e3;
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+    border-left: 4px solid #8a5a2d;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.04), inset 0 0 18px rgba(120,80,30,0.04);
+}
+
+.verse-number{
+    font-size: 1.3rem;
+    color: #6d421c;
+    margin-bottom: 14px;
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Kalpurush', sans-serif;
+}
+
 .field{
-    margin-bottom:14px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
 }
 
 .field-title{
-    color:#7a4b1f;
-    margin-bottom:4px;
-    font-weight:bold;
-    font-size:0.95rem;
-    text-align:center;
-    letter-spacing:0.5px;
+    color: #7a4b1f;
+    margin-bottom: 4px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    text-align: center;
+    letter-spacing: 0.5px;
     font-family: 'Kalpurush', sans-serif;
 }
 
 .field-content{
-    white-space:pre-wrap;
-    font-size:1.08rem;
-    width:100%;
+    white-space: pre-wrap;
+    font-size: 1.08rem;
+    width: 100%;
 }
 
-/* Sanskrit */
+/* ==========================================================================
+   ৭. TEXT LANGUAGES & STYLES
+   ========================================================================== */
 .sanskrit{
-    font-family:'Noto Serif Devanagari','Tiro Devanagari Sanskrit',serif;
-    font-size:1.75rem;
-    line-height:2.0;
-    color:#4f2f12;
-    font-weight:700;
-    text-align:center !important;
-    width:100%;
-    display:block;
-    white-space:pre-line;
+    font-family: 'Tiro Devanagari Sanskrit','Noto Serif Devanagari',serif;
+    font-size: 1.75rem;
+    line-height: 2.0;
+    color: #4f2f12;
+    font-weight: 700;
+    text-align: center !important;
+    width: 100%;
+    display: block;
+    white-space: pre-line;
 }
 
-/* English Translation */
 .english-text{
-    font-family:'EB Garamond', serif;
-    text-align:left;
-    font-size:1.08rem;
-    line-height:1.8;
+    font-family: 'Kalpurush', sans-serif;
+    text-align: left;
+    font-size: 1.08rem;
+    line-height: 1.8;
 }
 
-/* English Transliteration */
 .english-transliteration{
-    font-family:'EB Garamond', serif;
-    font-style:italic;
-    letter-spacing:0.4px;
-    font-weight:700;
-    text-align:center !important;
-    width:100%;
-    display:block;
-    white-space:pre-line;
+    font-family: 'Kalpurush', sans-serif;
+    font-style: italic;
+    letter-spacing: 0.4px;
+    font-weight: 700;
+    text-align: center !important;
+    width: 100%;
+    display: block;
+    white-space: pre-line;
     font-size: 1.35rem;
 }
 
-/* Bangla Translation */
 .bangla-text{
-    font-family:'Kalpurush','Noto Serif Bengali',sans-serif;
-    font-size:1.15rem;
-    line-height:1.9;
-    text-align:left;
+    font-family: 'Kalpurush','Noto Serif Bengali',sans-serif !important;
+    font-size: 1.15rem;
+    line-height: 1.9;
+    text-align: left;
 }
 
-/* Bangla Transliteration */
 .bangla-transliteration{
-    font-family: 'Kalpurush', sans-serif; /* Prioritize Noto Serif */
-    font-size: 1.25rem; /* Increased slightly for clear conjunct readability */
+    font-family: 'Kalpurush', sans-serif !important;
+    font-size: 1.25rem;
     line-height: 1.8;
     font-weight: 700; 
     text-align: center !important;
     width: 100%;
     display: block;
     white-space: pre-line;
-    letter-spacing: 0.3px; /* Gives the complex characters a tiny bit of breathing room */
+    letter-spacing: 0.3px;
 }
 
-/* Footer */
+/* 🎯 গীতার গান কলামের জন্য সুপার প্রায়োরিটি সেন্টার রুল */
+.verse-card .field .field-content.gitar-gaan-text,
+.gitar-gaan-text {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    font-size: 1.15rem !important;
+    line-height: 1.7 !important;
+    color: #1a0f05 !important; 
+    font-family: 'Kalpurush', sans-serif !important;
+}
+
+.verse-card .field .field-content.gitar-gaan-text * {
+    text-align: center !important;
+}
+
+/* ==========================================================================
+   ৮. FOOTER & NAVIGATION BOTTOM LAYOUT
+   ========================================================================== */
 .footer{
-    text-align:center;
-    padding:35px 20px;
-    color:#7a6a57;
-    font-size:1.1rem;
+    text-align: center;
+    padding: 35px 20px;
+    color: #7a6a57;
+    font-size: 1.1rem;
+    font-family: 'Kalpurush', sans-serif;
 }
 
-/* Chapter End Bottom Navigation Layout */
 .chapter-nav {
     display: flex;
     flex-direction: column;
@@ -420,9 +419,7 @@ body{
     background: #f8edd0;
     border-radius: 14px;
     border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 
-        0 4px 10px rgba(0, 0, 0, 0.05),
-        inset 0 0 20px rgba(120, 80, 30, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05), inset 0 0 20px rgba(120, 80, 30, 0.05);
 }
 
 .nav-btn {
@@ -442,7 +439,6 @@ body{
     transform: scale(0.98);
 }
 
-/* Back to Index Navigation Button Style */
 .prev-chap-btn {
     background: #8a5a2d;
     color: #fff;
@@ -453,7 +449,6 @@ body{
     background: #704722;
 }
 
-/* Next Chapter Navigation Button Style */
 .next-chap-btn {
     background: #6d421c;
     color: #fff;
@@ -464,19 +459,43 @@ body{
     background: #4f2f12;
 }
 
-/* Mobile */
+/* ==========================================================================
+   ৯. DYNAMIC FIXES & SPECIFIC OVERRIDES
+   ========================================================================== */
+#checkboxContainer,
+#checkboxContainer label,
+#checkboxContainer span,
+#checkboxContainer input,
+.filter-options,
+.filter-options label,
+.filter-options span {
+    font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
+    font-size: 1.05rem !important;
+}
+
+/* ডাইনামিক কলামের গ্লোবাল রুল (গীতার গান বাদে বাকি সব টেক্সটকে কালপুরুষ করবে) */
+.field-content:not(.gitar-gaan-text),
+[class*="dynamic-"],
+.field-content div:not(.gitar-gaan-text),
+.verse-card .field .field-content:not(.gitar-gaan-text) {
+    font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
+}
+
+/* ==========================================================================
+   ১০. RESPONSIVE DESIGN (MOBILE ADJUSTMENTS)
+   ========================================================================== */
 @media(max-width:768px){
     .hero h1{
-        font-size:2.2rem;
+        font-size: 2.2rem;
     }
 
     .chapter-header h2{
-        font-size:1.7rem;
+        font-size: 1.7rem;
     }
 
     .sanskrit{
-        font-size:1.35rem;
-        line-height:2;
+        font-size: 1.35rem;
+        line-height: 2;
     }
 
     .book-view,
@@ -484,14 +503,13 @@ body{
     .chapter-header,
     .chapter-nav,
     .verse-card{
-        padding:18px;
+        padding: 18px;
     }
 
     .field-content{
-        font-size:1rem;
+        font-size: 1rem;
     }
 
-    /* Loader Mobile Adjustments */
     .loader-text {
         font-size: 1.9rem;
         letter-spacing: 1px;
@@ -504,15 +522,32 @@ body{
     .inner-ring { width: 40px; height: 40px; }
 }
 /* ==========================================================================
-   DISPLAY OPTIONS / CHECKBOX CONTAINER FORCE FIX
+   ভবিষ্যতের সব ডাইনামিক কলাম একবারে কালপুরুষ করার ম্যাজিক ফিক্স
    ========================================================================== */
-#checkboxContainer,
-#checkboxContainer label,
-#checkboxContainer span,
-#checkboxContainer input,
-.filter-options,
-.filter-options label,
-.filter-options span {
+.field-content,
+[class*="dynamic-"],
+[class^="dynamic-"],
+.verse-card .field .field-content div {
   font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
-  font-size: 1.05rem !important; /* লেখা যেন স্পষ্ট ও পড়া যায় */
+}
+/* ==========================================================================
+   তাৎপর্য কলামের জন্য চূড়ান্ত ফিক্স (টেক্সট জাস্টিফাই ও কালপুরুষ)
+   ========================================================================== */
+.purport-text,
+div.purport-text,
+.verse-card .field .purport-text,
+.verse-card .field-content.purport-text {
+  text-align: justify !important; /* লেখা দুই পাশ সমান (Justify) করার জন্য */
+  text-justify: inter-word;        /* শব্দের মাঝে সুষম স্পেস তৈরি করবে */
+  display: block !important;
+  width: 100% !important;
+  font-size: 1.15rem;
+  line-height: 1.8;                /* পড়ার সুবিধার্থে লাইন স্পেসিং একটু বাড়ানো হলো */
+  color: #2b1a08; 
+  font-family: 'Kalpurush', sans-serif !important;
+}
+
+/* তাৎপর্যের ভেতরে যদি কোনো চাইল্ড প্যারাগ্রাফ বা এলিমেন্ট থাকে */
+.purport-text * {
+  text-align: justify !important;
 }
