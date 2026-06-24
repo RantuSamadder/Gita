@@ -563,3 +563,18 @@ div.purport-text,
 .purport-text * {
   text-align: justify !important;
 }
+/* ==========================================================================
+   মোবাইলের জন্য চূড়ান্ত ও বাধ্যতামূলক ফন্ট ফিক্স (সংস্কৃত বাদে সব কালপুরুষ)
+   ========================================================================== */
+*:not(.sanskrit) {
+    font-family: 'Kalpurush', 'Noto Serif Bengali', sans-serif !important;
+}
+
+/* গীতার গান কলামকে মোবাইলেও ১০০% সেন্টারে রাখার জন্য */
+.gitar-gaan-text, 
+.gitar-gaan-text *, 
+[class*="dynamic-"].gitar-gaan-text {
+    font-family: 'Kalpurush', sans-serif !important;
+    text-align: center !important;
+    display: block !important;
+}
