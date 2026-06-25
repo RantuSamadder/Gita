@@ -385,6 +385,7 @@ body {
     margin-bottom: 18px;
     border-left: 4px solid #8a5a2d;
     box-shadow: 0 3px 10px rgba(0,0,0,0.04), inset 0 0 18px rgba(120,80,30,0.04);
+    scroll-margin-top: 20px;
 }
 
 .verse-number{
