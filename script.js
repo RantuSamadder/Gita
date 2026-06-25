@@ -104,12 +104,12 @@ function jumpToVerse(type) {
     setTimeout(() => {
         const targetCard = document.getElementById(`verse-${verseValue}`);
         if (targetCard) {
-            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
             // একটু হাইলাইট করার জন্য ফ্ল্যাশ ইফেক্ট
             targetCard.style.background = '#ead8b1';
             setTimeout(() => { targetCard.style.background = '#fdf6e3'; }, 1500);
         }
-    }, 400); // ভিউ রেন্ডার হওয়ার জন্য সামান্য সময় দেওয়া
+    }, 400); // ভিউ রেন্ডার হওয়ার জন্য সামান্য সময় দেওয়া
 }
 
 // [বাকি createCheckboxes, getSelectedFields, renderIndex ফাংশনগুলো আগের মতোই থাকবে]
