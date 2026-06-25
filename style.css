@@ -370,6 +370,14 @@ body {
     font-size: 1.15rem !important;
     line-height: 1.8 !important;
 }
+.center-text {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;       /* বাড়তি টপ-বটম গ্যাপ দূর করবে */
+    padding: 0 !important;      /* কোনো হিডেন প্যাডিং থাকলে তা সরাবে */
+    line-height: 1.8 !important; /* লাইনের মাঝের দূরত্ব ঠিক রাখবে */
+}
 
 /* English Text Defaults */
 .english-text {
