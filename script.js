@@ -28,6 +28,7 @@ async function loadData(){
 
         createCheckboxes();
         renderIndex();
+        initMainJumpFilter(); // হোমপেইজ ফিল্টার ইনিশিয়ালাইজেশন
     }
     catch(error){
         console.error(error);
@@ -38,6 +39,80 @@ async function loadData(){
     }
 }
 
+// হোমপেইজের অধ্যায় ড্রপডাউন পপুলেট করা
+function initMainJumpFilter() {
+    const mainChapSelect = document.getElementById('mainChapterSelect');
+    mainChapSelect.innerHTML = '<option value="">অধ্যায় নির্বাচন করুন</option>';
+    
+    appData.সূচীপত্র.forEach(item => {
+        const option = document.createElement('option');
+        option.value = item['Chapter'];
+        option.textContent = item['Chapter'];
+        mainChapSelect.appendChild(option);
+    });
+}
+
+// অধ্যায় পরিবর্তনের ওপর ভিত্তি করে শ্লোক ড্রপডাউন আপডেট করা
+function populateVerses(type) {
+    if (type === 'main') {
+        const chapName = document.getElementById('mainChapterSelect').value;
+        const verseSelect = document.getElementById('mainVerseSelect');
+        
+        if (!chapName) {
+            verseSelect.innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
+            verseSelect.disabled = true;
+            return;
+        }
+
+        const chapter = appData.chapters.find(item => item.sheetName === chapName);
+        verseSelect.innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
+        
+        if (chapter && chapter.verses) {
+            chapter.verses.forEach(v => {
+                const fullVerse = v['শ্লোক'] || '';
+                const verseOnly = fullVerse.includes('-') ? fullVerse.split('-')[1] : fullVerse;
+                const formattedVerse = verseOnly.replaceAll('_', ', ');
+                
+                const option = document.createElement('option');
+                option.value = fullVerse; // আইডি হিসেবে ফুল শ্লোক টেক্সট রাখছি
+                option.textContent = `শ্লোক ${formattedVerse}`;
+                verseSelect.appendChild(option);
+            });
+            verseSelect.disabled = false;
+        }
+    }
+}
+
+// নির্দিষ্ট শ্লোকে স্ক্রোল করে জাম্প করার ফাংশন
+function jumpToVerse(type) {
+    let chapName, verseValue;
+
+    if (type === 'main') {
+        chapName = document.getElementById('mainChapterSelect').value;
+        verseValue = document.getElementById('mainVerseSelect').value;
+        if (!chapName || !verseValue) return alert('দয়া করে অধ্যায় ও শ্লোক উভয়ই সিলেক্ট করুন।');
+        
+        // প্রথমে অধ্যায় ভিউ ওপেন করবে
+        renderChapter(chapName);
+    } else {
+        chapName = currentChapter;
+        verseValue = document.getElementById('chapVerseSelect').value;
+        if (!verseValue) return alert('দয়া করে শ্লোক সিলেক্ট করুন।');
+    }
+
+    // শ্লোক কার্ড খুঁজে বের করে স্ক্রোল করা
+    setTimeout(() => {
+        const targetCard = document.getElementById(`verse-${verseValue}`);
+        if (targetCard) {
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // একটু হাইলাইট করার জন্য ফ্ল্যাশ ইফেক্ট
+            targetCard.style.background = '#ead8b1';
+            setTimeout(() => { targetCard.style.background = '#fdf6e3'; }, 1500);
+        }
+    }, 400); // ভিউ রেন্ডার হওয়ার জন্য সামান্য সময় দেওয়া
+}
+
+// [বাকি createCheckboxes, getSelectedFields, renderIndex ফাংশনগুলো আগের মতোই থাকবে]
 function createCheckboxes(){
     const container = document.getElementById('checkboxContainer');
     container.innerHTML = '';
@@ -113,10 +188,24 @@ function renderChapter(chapterName){
     renderVerses(chapter);
     renderChapterNavigation(chapterName);
 
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
+    // অধ্যায়ের ভেতরের শ্লোক ড্রপডাউন পপুলেট করা
+    const chapVerseSelect = document.getElementById('chapVerseSelect');
+    chapVerseSelect.innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
+    chapter.verses.forEach(v => {
+        const fullVerse = v['শ্লোক'] || '';
+        const verseOnly = fullVerse.includes('-') ? fullVerse.split('-')[1] : fullVerse;
+        const formattedVerse = verseOnly.replaceAll('_', ', ');
+        
+        const option = document.createElement('option');
+        option.value = fullVerse;
+        option.textContent = `শ্লোক ${formattedVerse}`;
+        chapVerseSelect.appendChild(option);
     });
+
+    // সরাসরি সূচীপত্র থেকে না আসলে স্ক্রোল টপে যাবে
+    if (document.activeElement.tagName !== 'BUTTON') {
+        window.scrollTo({ top:0, behavior:'smooth' });
+    }
 }
 
 function renderChapterHeader(chapterName){
@@ -151,8 +240,11 @@ function renderVerses(chapter){
     chapter.verses.forEach(verse => {
         const card = document.createElement('div');
         card.className = 'verse-card';
-
+        
+        // এখানে প্রতিটি কার্ডে একটি ইউনিক ID দেওয়া হচ্ছে স্ক্রোল করার সুবিধার জন্য
         const fullVerse = verse['শ্লোক'] || '';
+        card.id = `verse-${fullVerse}`; 
+
         const verseOnly = fullVerse.includes('-') ? fullVerse.split('-')[1] : fullVerse;
         const formattedVerse = verseOnly.replaceAll('_', ', ');
 
@@ -164,30 +256,14 @@ function renderVerses(chapter){
             if(verse[field]){
                 let extraClass = '';
 
-                if(field === 'সংষ্কৃতম্'){
-                    extraClass = 'sanskrit';
-                }
-                else if(field === 'English Transliteration'){
-                    extraClass = 'english-transliteration';
-                }
-                else if(field === 'English Translation'){
-                    extraClass = 'english-text';
-                }
-                else if(field === 'লিপ্যন্তর'){
-                    extraClass = 'bangla-transliteration';
-                }
-                else if(field === 'অনুবাদ'){
-                    extraClass = 'bangla-text';
-                }
-                else if(field.includes('গীতার') && field.includes('গান')){
-                    extraClass = 'gitar-gaan-text'; 
-                }
-                else if(field.trim() === 'তাৎপর্য'){
-                    extraClass = 'purport-text'; 
-                }
-                else {
-                    extraClass = 'dynamic-' + field.toLowerCase().replace(/[^a-z0-9]/g, '-');
-                }
+                if(field === 'সংষ্কৃতম্'){ extraClass = 'sanskrit'; }
+                else if(field === 'English Transliteration'){ extraClass = 'english-transliteration'; }
+                else if(field === 'English Translation'){ extraClass = 'english-text'; }
+                else if(field === 'লিপ্যন্তর'){ extraClass = 'bangla-transliteration'; }
+                else if(field === 'অনুবাদ'){ extraClass = 'bangla-text'; }
+                else if(field.includes('গীতার') && field.includes('গান')){ extraClass = 'gitar-gaan-text'; }
+                else if(field.trim() === 'তাৎপর্য'){ extraClass = 'purport-text'; }
+                else { extraClass = 'dynamic-' + field.toLowerCase().replace(/[^a-z0-9]/g, '-'); }
 
                 html += `
                     <div class="field">
@@ -203,6 +279,7 @@ function renderVerses(chapter){
     });
 }
 
+// [বাকি ফাংশনগুলো আগের মতোই থাকবে]
 function renderChapterNavigation(chapterName) {
     const navContainer = document.getElementById('chapterNavigation');
     if (!navContainer) return;
@@ -237,10 +314,13 @@ function renderChapterNavigation(chapterName) {
 function backToIndex(){
     document.getElementById('chapterView').style.display = 'none';
     document.getElementById('bookView').style.display = 'block';
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
-    });
+    
+    // হোমপেইজে ফিরে আসার পর ড্রপডাউন রিসেট করা
+    document.getElementById('mainChapterSelect').value = "";
+    document.getElementById('mainVerseSelect').innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
+    document.getElementById('mainVerseSelect').disabled = true;
+
+    window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 loadData();
