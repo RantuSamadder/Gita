@@ -48,11 +48,33 @@
         <div class="book-title">
             <h2>সূচীপত্র</h2>
         </div>
+        <div class="jump-filter-container main-jump">
+            <h3>সরাসরি শ্লোকে যান</h3>
+            <div class="filter-controls">
+                <select id="mainChapterSelect" onchange="populateVerses('main')">
+                    <option value="">অধ্যায় নির্বাচন করুন</option>
+                </select>
+                <select id="mainVerseSelect" disabled>
+                    <option value="">শ্লোক নির্বাচন করুন</option>
+                </select>
+                <button onclick="jumpToVerse('main')" class="jump-btn">যান →</button>
+            </div>
+        </div>
+        
         <div class="index-list" id="indexContainer"></div>
     </section>
 
     <section class="chapter-view" id="chapterView">
         <div class="chapter-header" id="chapterHeader"></div>
+
+        <div class="jump-filter-container chapter-jump">
+            <div class="filter-controls">
+                <select id="chapVerseSelect">
+                    <option value="">শ্লোক নির্বাচন করুন</option>
+                </select>
+                <button onclick="jumpToVerse('chap')" class="jump-btn">শ্লোকে যান</button>
+            </div>
+        </div>
 
         <div class="controls">
             <h3>পাঠ বিন্যাস</h3>
