@@ -1,6 +1,5 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbzDO8jWrQxRI1xcTRI2EuKFkxyhxSEFwZq1TQmrCJpH3A2blnfrD8On-7grv-sIkSs3/exec';
 
-let checkboxFields = [];
 let appData = null;
 let currentChapter = null;
 
@@ -10,25 +9,8 @@ async function loadData(){
         const data = await response.json();
         appData = data;
         
-        const extractedFields = new Set();
-        if (appData.chapters && Array.isArray(appData.chapters)) {
-            appData.chapters.forEach(chapter => {
-                if (chapter.verses && Array.isArray(chapter.verses)) {
-                    chapter.verses.forEach(verse => {
-                        Object.keys(verse).forEach(key => {
-                            if (key !== 'শ্লোক') {
-                                extractedFields.add(key);
-                            }
-                        });
-                    });
-                }
-            });
-        }
-        checkboxFields = Array.from(extractedFields);
-
-        createCheckboxes();
         renderIndex();
-        initMainJumpFilter(); // হোমপেইজ ফিল্টার ইনিশিয়ালাইজেশন
+        initMainJumpFilter(); // হোমপেইজ ফিল্টার ইনিশিয়ালাইজেশন
     }
     catch(error){
         console.error(error);
@@ -39,10 +21,10 @@ async function loadData(){
     }
 }
 
-// হোমপেইজের অধ্যায় ড্রপডাউন পপুলেট করা
+// হোমপেইজের অধ্যায় ড্রপডাউন পপুলেট করা
 function initMainJumpFilter() {
     const mainChapSelect = document.getElementById('mainChapterSelect');
-    mainChapSelect.innerHTML = '<option value="">অধ্যায় নির্বাচন করুন</option>';
+    mainChapSelect.innerHTML = '<option value="">অধ্যায় নির্বাচন করুন</option>';
     
     appData.সূচীপত্র.forEach(item => {
         const option = document.createElement('option');
@@ -52,7 +34,7 @@ function initMainJumpFilter() {
     });
 }
 
-// অধ্যায় পরিবর্তনের ওপর ভিত্তি করে শ্লোক ড্রপডাউন আপডেট করা
+// অধ্যায় পরিবর্তনের ওপর ভিত্তি করে শ্লোক ড্রপডাউন আপডেট করা
 function populateVerses(type) {
     if (type === 'main') {
         const chapName = document.getElementById('mainChapterSelect').value;
@@ -74,7 +56,7 @@ function populateVerses(type) {
                 const formattedVerse = verseOnly.replaceAll('_', ', ');
                 
                 const option = document.createElement('option');
-                option.value = fullVerse; // আইডি হিসেবে ফুল শ্লোক টেক্সট রাখছি
+                option.value = fullVerse; 
                 option.textContent = `শ্লোক ${formattedVerse}`;
                 verseSelect.appendChild(option);
             });
@@ -90,34 +72,40 @@ function jumpToVerse(type) {
     if (type === 'main') {
         chapName = document.getElementById('mainChapterSelect').value;
         verseValue = document.getElementById('mainVerseSelect').value;
-        if (!chapName || !verseValue) return alert('দয়া করে অধ্যায় ও শ্লোক উভয়ই সিলেক্ট করুন।');
+        if (!chapName || !verseValue) return alert('দয়া করে অধ্যায় ও শ্লোক উভয়ই সিলেক্ট করুন।');
         
-        // প্রথমে অধ্যায় ভিউ ওপেন করবে
         renderChapter(chapName);
     } else {
         chapName = currentChapter;
         verseValue = document.getElementById('chapVerseSelect').value;
-        if (!verseValue) return alert('দয়া করে শ্লোক সিলেক্ট করুন।');
+        if (!verseValue) return alert('দয়া করে শ্লোক সিলেক্ট করুন।');
     }
 
-    // শ্লোক কার্ড খুঁজে বের করে স্ক্রোল করা
     setTimeout(() => {
         const targetCard = document.getElementById(`verse-${verseValue}`);
         if (targetCard) {
             targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            // একটু হাইলাইট করার জন্য ফ্ল্যাশ ইফেক্ট
             targetCard.style.background = '#ead8b1';
             setTimeout(() => { targetCard.style.background = '#fdf6e3'; }, 1500);
         }
-    }, 400); // ভিউ রেন্ডার হওয়ার জন্য সামান্য সময় দেওয়া
+    }, 400); 
 }
 
-// [বাকি createCheckboxes, getSelectedFields, renderIndex ফাংশনগুলো আগের মতোই থাকবে]
-function createCheckboxes(){
+// অধ্যায়ের কলাম অনুযায়ী ডাইনামিকালি চেকবক্স তৈরি করার ফাংশন (আপডেটেড)
+function createCheckboxesForChapter(chapter){
     const container = document.getElementById('checkboxContainer');
     container.innerHTML = '';
 
-    checkboxFields.forEach(field => {
+    // যদি অধ্যায়ে কোনো শ্লোক না থাকে তবে ফেরত যাবে
+    if (!chapter.verses || chapter.verses.length === 0) return;
+
+    // এই অধ্যায়ের প্রথম শ্লোক থেকে সমস্ত কলামের নাম (হেডার) বের করা হচ্ছে
+    const firstVerse = chapter.verses[0];
+    const fields = Object.keys(firstVerse).filter(key => key !== 'শ্লোক');
+
+    // পূর্বের সিলেক্টেড স্টেট ধরে রাখার জন্য (যদি ইউজার কোনো চেকবক্স আনচেক করে থাকেন)
+    // প্রথমবার রেন্ডারের সময় সব চেকড (checked) থাকবে
+    fields.forEach(field => {
         const label = document.createElement('label');
         label.innerHTML = `
             <input type="checkbox" value="${field}" checked>
@@ -125,18 +113,6 @@ function createCheckboxes(){
         `;
         container.appendChild(label);
     });
-
-    container.addEventListener('change', (e) => {
-        e.stopPropagation();
-        const scrollY = window.scrollY;
-
-        if(currentChapter){
-            requestAnimationFrame(() => {
-                renderChapter(currentChapter);
-                window.scrollTo(0, scrollY);
-            });
-        }
-    }, true);
 }
 
 function getSelectedFields(){
@@ -166,14 +142,15 @@ function renderIndex(){
         `;
 
         card.addEventListener('click', () => {
-            renderChapter(item['Chapter']);
+            renderChapter(item['Chapter'], true); // প্রথমবার অধ্যায়ে ঢুকলে চেকবক্স নতুন করে তৈরি হবে
         });
 
         container.appendChild(card);
     });
 }
 
-function renderChapter(chapterName){
+// renderChapter ফাংশনে সামান্য পরিবর্তন আনা হয়েছে (আপডেটেড)
+function renderChapter(chapterName, isFirstLoad = false){
     currentChapter = chapterName;
     const chapter = appData.chapters.find(
         item => item.sheetName === chapterName
@@ -184,11 +161,29 @@ function renderChapter(chapterName){
     document.getElementById('bookView').style.display = 'none';
     document.getElementById('chapterView').style.display = 'block';
 
+    // যদি সরাসরি সূচীপত্র থেকে বা প্রথমবার অধ্যায়ে আসে, তবেই নতুন চেকবক্স লিস্ট তৈরি হবে
+    if (isFirstLoad) {
+        createCheckboxesForChapter(chapter);
+        
+        // চেকবক্সের চেঞ্জ ইভেন্ট লিসেনার সেট করা (ডুপ্লিকেট ইভেন্ট এড়াতে একবারই সেট করা ভালো)
+        const container = document.getElementById('checkboxContainer');
+        container.onchange = (e) => {
+            e.stopPropagation();
+            const scrollY = window.scrollY;
+            if(currentChapter){
+                requestAnimationFrame(() => {
+                    renderVerses(chapter); // শুধু শ্লোকগুলো রি-রেন্ডার হবে, পুরো চ্যাপ্টার নয়
+                    window.scrollTo(0, scrollY);
+                });
+            }
+        };
+    }
+
     renderChapterHeader(chapterName);
     renderVerses(chapter);
     renderChapterNavigation(chapterName);
 
-    // অধ্যায়ের ভেতরের শ্লোক ড্রপডাউন পপুলেট করা
+    // অধ্যায়ের ভেতরের শ্লোক ড্রপডাউন পপুলেট করা
     const chapVerseSelect = document.getElementById('chapVerseSelect');
     chapVerseSelect.innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
     chapter.verses.forEach(v => {
@@ -202,7 +197,6 @@ function renderChapter(chapterName){
         chapVerseSelect.appendChild(option);
     });
 
-    // সরাসরি সূচীপত্র থেকে না আসলে স্ক্রোল টপে যাবে
     if (document.activeElement.tagName !== 'BUTTON') {
         window.scrollTo({ top:0, behavior:'smooth' });
     }
@@ -241,7 +235,6 @@ function renderVerses(chapter){
         const card = document.createElement('div');
         card.className = 'verse-card';
         
-        // এখানে প্রতিটি কার্ডে একটি ইউনিক ID দেওয়া হচ্ছে স্ক্রোল করার সুবিধার জন্য
         const fullVerse = verse['শ্লোক'] || '';
         card.id = `verse-${fullVerse}`; 
 
@@ -279,7 +272,6 @@ function renderVerses(chapter){
     });
 }
 
-// [বাকি ফাংশনগুলো আগের মতোই থাকবে]
 function renderChapterNavigation(chapterName) {
     const navContainer = document.getElementById('chapterNavigation');
     if (!navContainer) return;
@@ -293,7 +285,7 @@ function renderChapterNavigation(chapterName) {
     if (prevChapterItem && prevChapterItem['Chapter']) {
         const prevChapterName = prevChapterItem['Chapter'];
         html += `
-            <button class="nav-btn prev-chap-btn" onclick="renderChapter('${prevChapterName}')">
+            <button class="nav-btn prev-chap-btn" onclick="renderChapter('${prevChapterName}', true)">
                 ← পূর্ববর্তী: ${prevChapterName}
             </button>
         `;
@@ -302,7 +294,7 @@ function renderChapterNavigation(chapterName) {
     if (nextChapterItem && nextChapterItem['Chapter']) {
         const nextChapterName = nextChapterItem['Chapter'];
         html += `
-            <button class="nav-btn next-chap-btn" onclick="renderChapter('${nextChapterName}')">
+            <button class="nav-btn next-chap-btn" onclick="renderChapter('${nextChapterName}', true)">
                 পরবর্তী: ${nextChapterName} →
             </button>
         `;
@@ -315,7 +307,6 @@ function backToIndex(){
     document.getElementById('chapterView').style.display = 'none';
     document.getElementById('bookView').style.display = 'block';
     
-    // হোমপেইজে ফিরে আসার পর ড্রপডাউন রিসেট করা
     document.getElementById('mainChapterSelect').value = "";
     document.getElementById('mainVerseSelect').innerHTML = '<option value="">শ্লোক নির্বাচন করুন</option>';
     document.getElementById('mainVerseSelect').disabled = true;
