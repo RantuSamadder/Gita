@@ -269,6 +269,111 @@ body {
     gap: 8px;
     font-size: 0.95rem;
 }
+/* ==========================================================================
+   JUMP FILTER STYLES (UPDATED FOR PERFECT THEME MATCH)
+   ========================================================================== */
+.jump-filter-container {
+    background: #fdf6e3;
+    border: 1px solid rgba(80, 50, 20, 0.15);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04), inset 0 0 15px rgba(120, 80, 30, 0.03);
+}
+
+.jump-filter-container h3 {
+    font-size: 1.15rem;
+    color: #6d421c;
+    margin-bottom: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.filter-controls select {
+    font-family: 'Kalpurush', Arial, sans-serif !important;
+    background: #f3e5c5;
+    color: #2f2417;
+    border: 1px solid rgba(80, 50, 20, 0.25);
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    cursor: pointer;
+    min-width: 180px;
+    transition: all 0.25s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.filter-controls select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #e6dbbd;
+}
+
+.filter-controls select:focus {
+    border-color: #8a5a2d;
+    background: #ead8b1;
+    box-shadow: 0 0 0 3px rgba(138, 90, 45, 0.15);
+}
+
+.jump-btn {
+    font-family: 'Kalpurush', Arial, sans-serif !important;
+    background: #6d421c; /* মূল ব্যাক বাটনের সাথে কালার ম্যাচ করা হয়েছে */
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(109, 66, 28, 0.2);
+}
+
+.jump-btn:hover {
+    background: #4f2f12;
+    transform: translateY(-1px);
+}
+
+.jump-btn:active {
+    transform: translateY(0);
+}
+
+/* অধ্যায়ের ভেতরের ফিল্টার উইজেট (বুক-ভিউ এর ভেতরের পার্টগুলোর সাথে শ্যাডো ম্যাচ করা) */
+.chapter-jump {
+    background: #f8edd0;
+    border: 1px solid rgba(80, 50, 20, 0.12);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.04), inset 0 0 18px rgba(120,80,30,0.04);
+}
+
+/* মোবাইল ভিউ অপ্টিমাইজেশন */
+@media(max-width:768px){
+    .jump-filter-container {
+        padding: 14px;
+        margin-bottom: 18px;
+    }
+    
+    .filter-controls {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-controls select, 
+    .jump-btn {
+        width: 100% !important;
+        min-width: 100%;
+        text-align: center;
+    }
+}
 
 /* ==========================================================================
    6. VERSE CARD & FIELD LAYOUT
