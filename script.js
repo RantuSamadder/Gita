@@ -121,6 +121,7 @@ function getSelectedFields(){
     ].map(el => el.value);
 }
 
+// মেইন সূচীপত্র রেন্ডারিং (আপডেটেড ফরম্যাট)
 function renderIndex(){
     const container = document.getElementById('indexContainer');
     container.innerHTML = '';
@@ -129,16 +130,29 @@ function renderIndex(){
         const card = document.createElement('div');
         card.className = 'index-item';
 
+        let titleText = '';
         let extraFields = '';
+
+        // ভূমিকা বা মুখবন্ধ হলে সরাসরি নাম দেখাবে, অন্যথায় "অধ্যায় X : নাম" ফরম্যাট হবে
+        if (item['Chapter'] === 'ভূমিকা' || item['Chapter'] === 'মুখবন্ধ') {
+            titleText = item['Chapter'];
+        } else if (item['Chapter'] && item['Name']) {
+            titleText = `${item['Chapter']} : ${item['Name']}`;
+        } else {
+            titleText = item['Chapter'] || '';
+        }
+
+        // ইনডেক্স কার্ডের নিচে শুধুমাত্র Name দেখাবে (যদি আলাদাভাবে দেখাতে চান), Details বাদ দেওয়া হয়েছে।
+        // যেহেতু নাম উপরেই টাইটেলে চলে গেছে, তাই এক্সট্রা ফিল্ডে 'Name' এবং 'Details' দুটাই বাদ দেওয়া হলো।
         Object.keys(item).forEach(key => {
-            if(key !== 'Chapter' && item[key]){
+            if(key !== 'Chapter' && key !== 'Name' && key !== 'Details' && item[key]){
                 extraFields += `<div>${item[key]}</div>`;
             }
         });
 
         card.innerHTML = `
-            <h3>${item['Chapter']}</h3>
-            <div class="index-extra">${extraFields}</div>
+            <h3>${titleText}</h3>
+            ${extraFields ? `<div class="index-extra">${extraFields}</div>` : ''}
         `;
 
         card.addEventListener('click', () => {
@@ -272,7 +286,7 @@ function renderVerses(chapter){
         const verseOnly = fullVerse.includes('-') ? fullVerse.split('-')[1] : fullVerse;
         const formattedVerse = verseOnly.replaceAll('_', ', ');
 
-        // ভূমিকা বা মুখবন্ধ হলে কার্ডে "শ্লোক X" শব্দটি বসবে না
+        // ভূমিকা বা মুখবন্ধ হলেカードে "শ্লোক X" শব্দটি বসবে না
         let html = '';
         if (currentChapter !== 'ভূমিকা' && currentChapter !== 'মুখবন্ধ') {
             html = `<div class="verse-number">শ্লোক ${formattedVerse}</div>`;
